@@ -140,13 +140,111 @@ const states = [{
 
 function App() 
 {
-	// Do not alter/remove main div
+	const [stateSelected ,setStateSelected]= useState();
+	const [citySelected ,setCitySelected]= useState();
+	const [landmarkSelected,setLandmarkSelected]=useState();
+	
+	const handleStateChange = (event) => {
+		setStateSelected(event.target.value);
+	  };
+	
+	  const handleCityChange = (event) => {
+		setCitySelected(event.target.value);
+	  };
+	
+	  const handleLandmarkChange = (event) => {
+		setLandmarkSelected(event.target.value);
+	  };
+	
 	return (
 	<div id="main">
-		
-	</div>
+		<select name="state" id="state" onChange={handleStateChange}>
+        {states.map((stateObj, idx) => {
+          return (
+            <option value={idx} key={uniqid()}>
+              {stateObj.name}
+            </option>
+          );
+        })}
+      </select>
+	  <select name="city" id="city" onChange={handleCityChange}>
+	  {states[stateSelected]?.city.map((cityObj, idx) => {
+          return (
+            <option value={idx} key={uniqid()}>
+              {cityObj.name}
+            </option>
+          );
+        })}
+      </select>
+	  <select name="landmark" id="landmark" onChange={handleLandmarkChange}>
+	  {states[stateSelected]?.city[citySelected]?.landmarks.map((landmarkObj, idx) => {
+          return (
+            <option value={idx} key={uniqid()}>
+              {landmarkObj.name}
+            </option>
+          );
+        })}
+      </select>
+	  <hr />
+
+<div>
+  <div id="state-name"> State Name : {states[stateSelected]?.name}</div>
+  <div id="state-title">State Title : {states[stateSelected]?.name}</div>
+  <div id="state-description">
+	{" "}
+	State Description : {states[stateSelected]?.description}
+  </div>
+</div>
+<hr />
+
+<div>
+  <div id="city-name">
+	{" "}
+	City Name : {states[stateSelected]?.city[citySelected]?.name}
+  </div>
+  <div id="city-title">
+	City Title : {states[stateSelected]?.city[citySelected]?.name}
+  </div>
+  <div id="city-description">
+	{" "}
+	City Description :{" "}
+	{states[stateSelected]?.city[citySelected]?.description}
+  </div>
+</div>
+<hr />
+
+<div>
+  <div id="#landmark-name">
+	{" "}
+	Landmark Name :{" "}
+	{
+	  states[stateSelected]?.city[citySelected]?.landmarks[
+		landmarkSelected
+	  ]?.name
+	}
+  </div>
+  <div id="#landmark-title">
+	Landmark Title :{" "}
+	{
+	  states[stateSelected]?.city[citySelected]?.landmarks[
+		landmarkSelected
+	  ]?.name
+	}
+  </div>
+  <div id="#landmark-description">
+	{" "}
+	Landmark Description :{" "}
+	{
+	  states[stateSelected]?.city[citySelected]?.landmarks[
+		landmarkSelected
+	  ]?.description
+	}
+  </div>
+</div>
+</div>
 	);
 }
+
 
 
 export default App;
